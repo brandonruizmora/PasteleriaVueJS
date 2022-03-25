@@ -3,29 +3,32 @@
         <div class="row">
             <div class="col-12 my-5">
                 <h2>Crea tu pastel favorito</h2>
-                <form>
+                <form v-on:submit="changeForm">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" />
+                        <!-- <input type="text" class="form-control" v-bind:value="name" v-on:change="changeValueName" /> -->
+                        <input type="text" class="form-control" id="name" v-bind:value="name" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" />
+                        <input type="text" class="form-control" id="phone" v-bind:value="phone" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Correo Electrónico</label>
-                        <input type="email" class="form-control" />
+                        <input type="email" class="form-control" id="email" v-bind:value="email" />
                         <div class="form-text">No se compartira con nadie</div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Descripción general</label>
                         <div class="form-floating">
-                            <textarea
+                            <input
+                                type="text"
                                 class="form-control"
+                                id="description"
                                 placeholder="Leave a comment here"
-                                id="floatingTextarea2"
                                 style="height: 100px"
-                            ></textarea>
+                                v-bind:value="description"
+                            />
                             <label for="floatingTextarea2">Escribe tus deseos...</label>
                         </div>
                     </div>
@@ -77,3 +80,46 @@
         </div>
     </div>
 </template>
+
+<script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+export default {
+    setup() {
+
+        const store = useStore();
+
+        const name = computed(() => store.state.form.name);
+        const phone = computed(() => store.state.form.phone);
+        const email = computed(() => store.state.form.email);
+        const description = computed(() => store.state.form.description);
+
+        // const changeValueName = (e) => {
+        //     store.commit('CHANGENAME', e.target.value);
+        // }
+
+        const changeForm = (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.toLowerCase();
+            const phone = document.getElementById('phone').value.toLowerCase();
+            const email = document.getElementById('email').value.toLowerCase();
+            const description = document.getElementById('description').value.toLowerCase();
+            store.commit('ADDPEDIDO', {
+                name: name,
+                phone: phone,
+                email: email,
+                description: description
+            });
+        }
+        return {
+            name,
+            phone,
+            email,
+            description,
+            // changeValueName,
+            changeForm
+
+        }
+    }
+}
+</script>

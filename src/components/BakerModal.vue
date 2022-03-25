@@ -47,105 +47,39 @@
                 </div>
             </div>
             <div class="col-12">
-                <div class="accordion" id="accordionExample">
+                <div v-for="pedido in pedidos" v-bind:key="pedido.name">
+                    <span>{{pedido.name}}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="accordion" id="accordionBaker" v-for="pedido in pedidos" v-bind:key="pedido.id">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
                             <button
                                 class="accordion-button"
                                 type="button"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne"
-                                aria-expanded="true"
-                                aria-controls="collapseOne"
-                            >Pedido #1</button>
+                                v-bind:data-bs-target="pedido.toggle"
+                            >Pedido {{pedido.name}}</button>
                         </h2>
                         <div
-                            id="collapseOne"
+                            v-bind:id="pedido.id"
                             class="accordion-collapse collapse show"
-                            aria-labelledby="headingOne"
-                            data-bs-parent="#accordionExample"
+                            data-bs-parent="#accordionBaker"
                         >
                             <div class="accordion-body">
                                 <p>
-                                    <b>Nombre:</b> Juan Francisco
+                                    <b>Nombre:</b> {{pedido.name}}
                                     <br />
-                                    <b>Teléfono:</b> 4567845678
+                                    <b>Teléfono:</b> {{pedido.phone}}
                                     <br />
-                                    <b>Correo:</b> juan.fran@correo.com
+                                    <b>Correo:</b> {{pedido.email}}
                                     <br />
-                                    <b>Descripción:</b> Con ojuelas de maiz porfavor.
+                                    <b>Descripción:</b> {{pedido.description}}
                                     <br />
                                     <b>Sabores:</b> Chocolate y Fresa.
                                     <br />
                                     <b>Adornos:</b> Betún
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button
-                                class="accordion-button collapsed"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo"
-                                aria-expanded="false"
-                                aria-controls="collapseTwo"
-                            >Pedido #2</button>
-                        </h2>
-                        <div
-                            id="collapseTwo"
-                            class="accordion-collapse collapse"
-                            aria-labelledby="headingTwo"
-                            data-bs-parent="#accordionExample"
-                        >
-                            <div class="accordion-body">
-                                <p>
-                                    <b>Nombre:</b> Diego Ortiz
-                                    <br />
-                                    <b>Teléfono:</b> 4567845678
-                                    <br />
-                                    <b>Correo:</b> die.ort@correo.com
-                                    <br />
-                                    <b>Descripción:</b> Con splenda en lugar de azucar.
-                                    <br />
-                                    <b>Sabores:</b> Limón
-                                    <br />
-                                    <b>Adornos:</b> Frutos
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button
-                                class="accordion-button collapsed"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree"
-                                aria-expanded="false"
-                                aria-controls="collapseThree"
-                            >Pedido #3</button>
-                        </h2>
-                        <div
-                            id="collapseThree"
-                            class="accordion-collapse collapse"
-                            aria-labelledby="headingThree"
-                            data-bs-parent="#accordionExample"
-                        >
-                            <div class="accordion-body">
-                                <p>
-                                    <b>Nombre:</b> Juan Perez
-                                    <br />
-                                    <b>Teléfono:</b> 4567845678
-                                    <br />
-                                    <b>Correo:</b> juan.prz@correo.com
-                                    <br />
-                                    <b>Descripción:</b>
-                                    <br />
-                                    <b>Sabores:</b> Vainilla
-                                    <br />
-                                    <b>Adornos:</b> Frutos
                                 </p>
                             </div>
                         </div>
@@ -155,3 +89,20 @@
         </div>
     </div>
 </template>
+
+<script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+export default {
+    setup() {
+
+        const store = useStore();
+
+        const pedidos = computed(() => store.state.pedidos);
+
+        return {
+            pedidos
+        }
+    }
+}
+</script>
