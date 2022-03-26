@@ -47,39 +47,33 @@
                 </div>
             </div>
             <div class="col-12">
-                <div v-for="pedido in pedidos" v-bind:key="pedido.name">
-                    <span>{{pedido.name}}</span>
-                </div>
-            </div>
-            <div class="col-12">
                 <div class="accordion" id="accordionBaker" v-for="pedido in pedidos" v-bind:key="pedido.id">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
-                            <button
-                                class="accordion-button"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                v-bind:data-bs-target="pedido.toggle"
-                            >Pedido {{pedido.name}}</button>
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                v-bind:data-bs-target="pedido.toggle">Pedido {{ pedido.name }}</button>
                         </h2>
-                        <div
-                            v-bind:id="pedido.id"
-                            class="accordion-collapse collapse show"
-                            data-bs-parent="#accordionBaker"
-                        >
+                        <div v-bind:id="pedido.id" class="accordion-collapse collapse show"
+                            data-bs-parent="#accordionBaker">
                             <div class="accordion-body">
                                 <p>
-                                    <b>Nombre:</b> {{pedido.name}}
+                                    <b>Nombre:</b> {{ pedido.name }}
                                     <br />
-                                    <b>Teléfono:</b> {{pedido.phone}}
+                                    <b>Teléfono:</b> {{ pedido.phone }}
                                     <br />
-                                    <b>Correo:</b> {{pedido.email}}
+                                    <b>Correo:</b> {{ pedido.email }}
                                     <br />
-                                    <b>Descripción:</b> {{pedido.description}}
+                                    <b>Descripción:</b> {{ pedido.description }}
                                     <br />
-                                    <b>Sabores:</b> Chocolate y Fresa.
-                                    <br />
-                                    <b>Adornos:</b> Betún
+                                    <b>Sabores:</b>
+                                <ul v-for="flavour in pedido.flavours" v-bind:key="flavour">
+                                    <li>{{ flavour }}</li>
+                                </ul>
+                                <br />
+                                <b>Adornos:</b>
+                                <ul v-for="ornament in pedido.ornaments" v-bind:key="ornament">
+                                    <li>{{ ornament }}</li>
+                                </ul>
                                 </p>
                             </div>
                         </div>
